@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GoodsModule } from './goods/goods.module';
 import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
   imports: [
@@ -18,6 +19,12 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.POSTGRES_NAME,
       autoLoadEntities: true,
       synchronize: true,
+    }),
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      installSubscriptionHandlers: true,
+      // debug: false,
+      // playground: false,
     }),
     GoodsModule,
   ],

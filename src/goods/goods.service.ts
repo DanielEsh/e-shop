@@ -15,7 +15,7 @@ export class GoodsService {
     return this.goodsRepository.find();
   }
 
-  findOne(id: string): Promise<GoodsI> {
+  findOne(id: number): Promise<GoodsI> {
     return this.goodsRepository.findOne(id);
   }
 }

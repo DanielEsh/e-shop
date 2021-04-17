@@ -10,9 +10,4 @@ export class GoodsController {
   findAll(): Promise<GoodsI[]> {
     return this.goodsService.findAll();
   }
-
-  // @Get()
-  // getDogs() {
-  //   return 'we get all goods';
-  // }
 }
