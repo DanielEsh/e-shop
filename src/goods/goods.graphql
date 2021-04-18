@@ -1,9 +1,0 @@
-type Query {
-    goods: [Goods]
-    goodsItem(id: ID!): Goods
-}
-
-type Goods {
-    id: Int
-    name: String
-}

@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Goods {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  goods: [Goods!]!
+  goodsItem(id: Float!): Goods!
+}

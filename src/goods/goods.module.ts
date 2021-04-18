@@ -7,7 +7,6 @@ import { GoodsResolver } from './goods.resolver';
 
 @Module({
   imports: [TypeOrmModule.forFeature([GoodsEntity])],
-  // controllers: [GoodsController],
   providers: [GoodsService, GoodsResolver],
 })
 export class GoodsModule {}
