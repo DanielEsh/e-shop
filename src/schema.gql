@@ -2,12 +2,32 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Goods {
-  id: ID!
+type Product {
+  id: Float!
   name: String!
 }
 
 type Query {
-  goods: [Goods!]!
-  goodsItem(id: Float!): Goods!
+  products: [Product]!
+  productById(id: Float!): Product
+}
+
+type Mutation {
+  createProduct(createProductData: CreateProductInput!): Product!
+  updateProduct(updateProductData: UpdateProductInput!): Product!
+  deleteProduct(deleteProductData: DeleteProductInput!): Product!
+}
+
+input CreateProductInput {
+  id: Float!
+  name: String!
+}
+
+input UpdateProductInput {
+  id: Float!
+  name: String!
+}
+
+input DeleteProductInput {
+  id: Float!
 }

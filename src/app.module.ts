@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GoodsModule } from './goods/goods.module';
+import { ProductModule } from './goods/product.module';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
@@ -26,7 +26,7 @@ import { join } from 'path';
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
-    GoodsModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],
