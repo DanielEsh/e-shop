@@ -4,6 +4,5 @@ import { IsNotEmpty } from 'class-validator';
 @InputType()
 export class DeleteProductInput {
   @Field()
-  @IsNotEmpty()
   id: number;
 }

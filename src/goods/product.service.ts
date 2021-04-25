@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './product.entity';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { Product } from './models/product.models';
 import { CreateProductInput } from './dto/input/create-product.input';
 import { UpdateProductInput } from './dto/input/update-product.input';
@@ -26,19 +26,32 @@ export class ProductServices {
   }
 
   async createProduct(createProductData: CreateProductInput): Promise<Product> {
-    console.log('create', createProductData);
-    return this.productRepository.create(createProductData);
+    await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(ProductEntity)
+      .values([createProductData])
+      .execute();
+    return createProductData;
   }
 
   async updateProduct(updateProductData: UpdateProductInput): Promise<Product> {
-    console.log('update', updateProductData);
-    return;
-    // return this.productRepository.update();
+    await getConnection()
+      .createQueryBuilder()
+      .update(ProductEntity)
+      .set({ ...updateProductData })
+      .where('id=:id', { id: updateProductData.id })
+      .execute();
+    return updateProductData;
   }
 
   async deleteProduct(deleteProductData: DeleteProductInput): Promise<Product> {
-    console.log('delete', deleteProductData);
-    return;
-    // return this.productRepository.delete();
+    await getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(ProductEntity)
+      .where('id=:id', { id: deleteProductData.id })
+      .execute();
+    return deleteProductData;
   }
 }

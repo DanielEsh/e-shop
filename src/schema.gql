@@ -19,7 +19,6 @@ type Mutation {
 }
 
 input CreateProductInput {
-  id: Float!
   name: String!
 }
 
