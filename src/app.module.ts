@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GoodsModule } from './goods/goods.module';
+import { ProductModule } from './goods/product.module';
 import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -19,7 +21,12 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    GoodsModule,
+    GraphQLModule.forRoot({
+      debug: true,
+      playground: true,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
+    ProductModule,
   ],
   controllers: [],
   providers: [],
