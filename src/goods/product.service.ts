@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './product.entity';
 import { Repository, getConnection } from 'typeorm';
@@ -22,10 +22,17 @@ export class ProductServices {
   async getProductById(
     GetProductByIdArgs: GetProductByIdArgs,
   ): Promise<Product> {
+    console.log('getProductByID', GetProductByIdArgs);
     return this.productRepository.findOne(GetProductByIdArgs);
   }
 
   async createProduct(createProductData: CreateProductInput): Promise<Product> {
+    const { name } = createProductData;
+
+    if (!name.length) {
+      return new HttpException('Product name is empty', HttpStatus.BAD_REQUEST);
+    }
+
     await getConnection()
       .createQueryBuilder()
       .insert()
@@ -36,6 +43,13 @@ export class ProductServices {
   }
 
   async updateProduct(updateProductData: UpdateProductInput): Promise<Product> {
+    const { id } = updateProductData;
+    const product = await this.productRepository.findOne({ id: id });
+
+    if (!product) {
+      return new HttpException('Invalid product id', HttpStatus.NOT_FOUND);
+    }
+
     await getConnection()
       .createQueryBuilder()
       .update(ProductEntity)
@@ -46,6 +60,13 @@ export class ProductServices {
   }
 
   async deleteProduct(deleteProductData: DeleteProductInput): Promise<Product> {
+    const { id } = deleteProductData;
+    const product = await this.productRepository.findOne({ id: id });
+
+    if (!product) {
+      return new HttpException('Invalid product id', HttpStatus.NOT_FOUND);
+    }
+
     await getConnection()
       .createQueryBuilder()
       .delete()

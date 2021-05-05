@@ -25,6 +25,15 @@ import { join } from 'path';
       debug: true,
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      formatError: (error) => {
+        const graphQLFormattedError = {
+          message:
+            error.extensions?.exception?.response?.message || error.message,
+          code: error.extensions?.code || 'SERVER_ERROR',
+          name: error.extensions?.exception?.name || error.name,
+        };
+        return graphQLFormattedError;
+      },
     }),
     ProductModule,
   ],
